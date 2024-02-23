@@ -1,0 +1,115 @@
+<h1>Employee List</h1>
+
+
+<form class="d-flex align-items-end">
+  <input [(ngModel)]="searchTerm" name="searchTerm" class="form-control me-2" type="search" placeholder="Search"
+    aria-label="Search" #data (keyup)="searchEmployee(data.value)">
+  <!-- <button class="btn btn-outline-success"  #data type="button" (click)="searchEmployee(data.value)">Search</button> -->
+</form>
+
+
+
+
+<table class="table table-striped table-hover mt-2">
+  <thead>
+    <tr>
+      <!-- <th>Id</th> -->
+      <th >Serial No.</th>
+      <th>Profile Image</th>
+      <th>Date Of Joining</th>
+      <th>Name</th>
+      <th>Designation</th>
+      <th>Salary</th>
+      <th class="content">Actions</th>
+    </tr>
+  </thead>
+  <tbody class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <tr *ngFor="let employee of employees; let i=index">
+      <!-- <td>{{employee.id}}</td> -->
+      <td>{{(page*pageSize)+1+i}}</td>
+      <td>
+        <button mat-button data-bs-toggle="modal" href="#exampleModalToggle" role="button"
+          (click)="setImagedata(employee.empImage)">
+          <img src="data:image/png;base64,{{employee.empImage}}" alt="Employee-Img" class="center square-image"
+            onerror="this.src='download.png'">
+        </button>
+      </td>
+
+
+      <td>{{ employee.createdDate | date : 'yyyy-MM-dd' }}</td>
+
+      <td>{{employee.name}}</td>
+      <td>{{employee.designation}}</td>
+      <td>{{employee.salary}}</td>
+      <td>
+        <div><button (click)="updateEmployee(employee.id)" class="btn btn-info">Update</button>
+          <button (click)="deleteEmployee(employee.id)" class="btn btn-danger"
+            style="margin-left: 10px;">Delete</button>
+        </div>
+      </td>
+
+    </tr>
+  </tbody>
+
+</table>
+
+
+<!------- dialog --------------->
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<!-- <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a> -->
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+  tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Employee-Pic</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img src="data:image/png;base64,{{imagebyte}}" alt="Employee-Img" class="center"
+          style=" background-size: contain; width: 400px ;height: 400px;">
+      </div>
+      <div class="modal-footer">
+        <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Pagination -->
+<!-- <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-end">
+      <li class="page-item" [class.disabled]="page==0">
+        <a class="page-link" (click)="onPageChange('Previous')" href="#" >
+          <span aria-hidden="true">&laquo;</span> Previous
+        </a>
+      </li>
+      <li class="page-item" *ngFor="let page of pagesArray()">
+        <a class="page-link" (click)="onPageChange('next')"  [class.active]="currentPage === page">{{ page + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="page == totalPages-1">
+        <a class="page-link" (click)="onPageChange('next')" >
+          Next <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav> -->
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-end">
+    <li class="page-item" [class.disabled]="currentPage === 0">
+      <a class="page-link" (click)="onPageChange('Previous')" href="#">
+        <span aria-hidden="true">&laquo;</span> Previous
+      </a>
+    </li>
+    <li class="page-item" *ngFor="let page of pagesArray()">
+      <a class="page-link" (click)="onPageChange(page)" [class.active]="currentPage === page">{{ page }}</a>
+    </li>
+    <li class="page-item" [class.disabled]="currentPage === totalPages - 1">
+      <a class="page-link" (click)="onPageChange('Next', $event)" href="#">
+        Next <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
