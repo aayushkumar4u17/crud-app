@@ -19,8 +19,8 @@ export class EmployeeListComponent implements OnInit {
   filteredEmployees: any[] = [];
   searchTerm: string = "";
   totalRecords: number = 0;
-sortDirection: string = 'asc';
-sortColumn: string = 'name';
+  sortDirection: string = 'asc';
+  sortColumn: string = 'name';
 
 
   constructor(private employeeService: EmployeeService,
@@ -120,11 +120,13 @@ sortColumn: string = 'name';
           this.totalElements = data.totalElements;
           this.page = data.pageable.pageNumber;
           this.size = data.pageable.pageSize;
-
+          // this.adjust = data.pageable.pageSize; 
+          // rit: any;
 
         }
       }, error: (err: any) => {
         alert(err.error.message);
+
       }
     })
   }
@@ -149,19 +151,19 @@ sortColumn: string = 'name';
   }
 
   // Inside your component
-sortData(column: string): void {
-  if (this.sortColumn === column) {
-    // If same column clicked, toggle direction
-    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-  } else {
-    // If different column clicked, set new column and default direction
-    this.sortColumn = column;
-    this.sortDirection = 'asc';
-  }
+  sortData(column: string): void {
+    if (this.sortColumn === column) {
+      // If same column clicked, toggle direction
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      // If different column clicked, set new column and default direction
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
 
-  // Implement your custom sorting logic here using this.sortColumn and this.sortDirection
-  // You may want to sort your data array accordingly
-}
+    // Implement your custom sorting logic here using this.sortColumn and this.sortDirection
+    // You may want to sort your data array accordingly
+  }
 
 
 
@@ -178,9 +180,9 @@ sortData(column: string): void {
 
   deleteEmployee(id: number) {
     const isConfirmed = window.confirm("Do you really want to delete this employee?");
-  
+
     if (isConfirmed) {
-      this.employeeService.deleteEmployee(id).subscribe((data: any ) => {
+      this.employeeService.deleteEmployee(id).subscribe((data: any) => {
         alert(data.message);
         console.log(data);
         this.getDataWithPagination();
@@ -190,5 +192,7 @@ sortData(column: string): void {
       console.log("Deletion cancelled by the user.");
     }
   }
-   
+  //Straight the main wall and the part of the main series and also want to see more around and the main concern is that the strike against the main stream and the main part
+  //Forward and the amina  
+
 }
